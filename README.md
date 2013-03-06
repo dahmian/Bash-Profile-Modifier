@@ -1,4 +1,4 @@
 Bash Profile Installer
 ======================
 
-A node.js script that accepts a string that will be appended to ~/.bash_profile. If the string is already in the profile, it will not be added. Useful for adding aliases for node.js scripts.
+A node.js script that accepts a string that will be appended or remove a string from ~/.bash_profile. Useful for adding aliases for node.js scripts.
