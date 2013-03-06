@@ -1,25 +1,39 @@
 exports.installAlias = installAlias;
+exports.removeAlias = uninstallAlias;
 var fs = require("fs");
 
 function installAlias(alias) {
+  profileModifier(alias, add);
+
+  function add(profile, bashProfilePath, alias) {
+    if (profile.match(alias) === null) {
+      var profile = profile + "\n" + alias;
+      fs.writeFileSync(bashProfilePath, profile, "utf-8");
+    }
+  }
+}
+
+function uninstallAlias(alias) {
+  profileModifier(alias, remove);
+
+  function remove(profile, bashProfilePath, alias) {
+    var profile = profile.replace("\n" + alias, "");
+    fs.writeFileSync(bashProfilePath, profile, "utf-8");
+  }
+}
+
+function profileModifier(alias, callback) {
   validateParameters(alias);
   var bashProfilePath = require("path").resolve(process.env.HOME + "/.bash_profile");
   var bashProfile = fs.readFileSync(bashProfilePath, "utf-8");
-  if (bashProfile.match(alias) === null) {
-    addAlias(bashProfile, bashProfilePath, alias);
-    sourceBashProfile(bashProfilePath);
-  }
+  callback(bashProfile, bashProfilePath, alias);
+  sourceBashProfile(bashProfilePath);
 }
 
 function validateParameters(alias) {
   if (typeof alias !== "string") {
     throw "alias argument must be a string";
   }
-}
-
-function addAlias(profile, bashProfilePath, alias) {
-  var profile = profile + "\n" + alias;
-  fs.writeFileSync(bashProfilePath, profile, "utf-8");
 }
 
 function sourceBashProfile(bashProfilePath) {
