@@ -3,6 +3,7 @@ exports.remove = remove;
 var fs = require("fs");
 
 function insert(alias) {
+  validateAlias(alias);
   profileModifier(alias, add);
 
   function add(profile, bashProfilePath, alias) {
@@ -14,6 +15,7 @@ function insert(alias) {
 }
 
 function remove(alias) {
+  validateAlias(alias);
   profileModifier(alias, remove);
 
   function remove(profile, bashProfilePath, alias) {
@@ -23,16 +25,22 @@ function remove(alias) {
 }
 
 function profileModifier(alias, callback) {
-  validateParameters(alias);
+  validateCallback(callback);
   var bashProfilePath = require("path").resolve(process.env.HOME + "/.bash_profile");
   var bashProfile = fs.readFileSync(bashProfilePath, "utf-8");
   callback(bashProfile, bashProfilePath, alias);
   sourceBashProfile(bashProfilePath);
 }
 
-function validateParameters(alias) {
+function validateAlias(alias) {
   if (typeof alias !== "string") {
     throw "alias argument must be a string";
+  }
+}
+
+function validateCallback(callback) {
+  if (typeof callback !== "function") {
+    throw "callback must be a function";
   }
 }
 
