@@ -1,8 +1,8 @@
-exports.installAlias = installAlias;
-exports.removeAlias = uninstallAlias;
+exports.insert = insert;
+exports.remove = remove;
 var fs = require("fs");
 
-function installAlias(alias) {
+function insert(alias) {
   profileModifier(alias, add);
 
   function add(profile, bashProfilePath, alias) {
@@ -13,7 +13,7 @@ function installAlias(alias) {
   }
 }
 
-function uninstallAlias(alias) {
+function remove(alias) {
   profileModifier(alias, remove);
 
   function remove(profile, bashProfilePath, alias) {

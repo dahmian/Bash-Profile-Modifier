@@ -1,4 +1,4 @@
-require("./install.js").installAlias(alias());
+require("./bash-profile-modifier.js").insert(alias());
 
 function alias() {
   var path = require("path");

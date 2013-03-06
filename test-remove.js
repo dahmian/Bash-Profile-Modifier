@@ -1,4 +1,4 @@
-require("./install.js").uninstallAlias(alias());
+require("./bash-profile-modifier.js").remove(alias());
 
 function alias() {
   var path = require("path");
