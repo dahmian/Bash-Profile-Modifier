@@ -1,5 +1,8 @@
+"use strict";
+
 exports.insert = insert;
 exports.remove = remove;
+
 var fs = require("fs");
 
 function insert(alias) {
