@@ -1,3 +1,5 @@
+"use strict";
+
 require("./bash-profile-modifier.js").remove(alias());
 
 function alias() {
